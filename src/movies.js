@@ -16,12 +16,15 @@ function howManyMovies(array) {
     })
     .filter(function (movie) {
       return movie.genre.indexOf("Drama") !== -1;
-    });
+    }).length;
 }
 
 // Iteration 3: All rates average - Get the average of all rates with 2 decimals
 
 function ratesAverage(movies) {
+  if (movies.length === 0) {
+    return 0;
+  }
   let rates = movies.map(function (movie) {
     return movie.rate;
   });
@@ -39,13 +42,23 @@ ratesAverage(movies);
 // Iteration 4: Drama movies - Get the average of Drama Movies
 
 function dramaMoviesRate(movies) {
-  return ratesAverage(howManyMovies(movies));
+  if (movies.length === 1) {
+    return movies[0].rate;
+  }
+  let dramaMovies = movies.filter(function (movie) {
+    return movie.genre.indexOf("Drama") !== -1;
+  });
+  return ratesAverage(dramaMovies);
 }
 
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
 
 function orderByYear(movies) {
-  return movies.sort(function (a, b) {
+  let clonedMovies = movies;
+  return clonedMovies.sort(function (a, b) {
+    if ((a.year = b.year)) {
+      return !a.title.localeCompare(b.title);
+    }
     if (a.year > b.year) {
       return 1;
     }
