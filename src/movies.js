@@ -31,13 +31,15 @@ function ratesAverage(movies) {
   return parseFloat(
     (
       rates.reduce(function (accumulator, currentElement) {
-        return accumulator + currentElement;
+        if (typeof currentElement === "number") {
+          return accumulator + currentElement;
+        } else {
+          return accumulator + 0;
+        }
       }) / movies.length
     ).toFixed(2)
   );
 }
-
-ratesAverage(movies);
 
 // Iteration 4: Drama movies - Get the average of Drama Movies
 
@@ -54,25 +56,40 @@ function dramaMoviesRate(movies) {
 // Iteration 5: Ordering by year - Order by year, ascending (in growing order)
 
 function orderByYear(movies) {
-  let clonedMovies = movies;
+  let clonedMovies = [...movies];
   return clonedMovies.sort(function (a, b) {
-    if ((a.year = b.year)) {
-      return !a.title.localeCompare(b.title);
-    }
     if (a.year > b.year) {
       return 1;
     }
     if (a.year < b.year) {
       return -1;
+    } else {
+      return a.title.localeCompare(b.title);
     }
-    return 0;
   });
 }
 
 // Iteration 6: Alphabetic Order - Order by title and print the first 20 titles
 
+// function orderAlphabetically(movies) {
+//   let orderedList = movies.sort(function (a, b) {
+//     if (a.title > b.title) {
+//       return 1;
+//     }
+//     if (a.title < b.title) {
+//       return -1;
+//     }
+//     return 0;
+//   });
+//   let orderedTitles = orderedList.map(function (movie) {
+//     return movie.title;
+//   });
+//   return orderedTitles.slice(0, 20);
+// }
+
 function orderAlphabetically(movies) {
-  let orderedList = movies.sort(function (a, b) {
+  let clonedMovies = [...movies];
+  let orderedList = clonedMovies.sort(function (a, b) {
     if (a.title > b.title) {
       return 1;
     }
